@@ -1,2 +1,4 @@
 syntax: glob
 .DS_Store
+*.egg-info/
+*.pyc

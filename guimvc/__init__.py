@@ -10,6 +10,4 @@
     :license: MIT, see LICENSE for more details.
 '''
 
-__author__ = 'Marc Schlaich (ms4py)'
-__version__ = '0.1a'
-__license__ = 'MIT'
+__version__ = '0.1-dev'
