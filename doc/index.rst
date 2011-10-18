@@ -34,8 +34,8 @@ Observer-Example
     attribute "data" changed from "1" to "2"
 
 
-Tutorial
-========
+Documentation
+=============
 
 .. toctree::
    :maxdepth: 2
