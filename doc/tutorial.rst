@@ -64,14 +64,14 @@ model::
             Observer.__init__(self, model)
 
 
-Now you can register a callback to specific changes.
+Now you can register a callback on the change of an attribute.
 Wildcards are allowed, too::
 
     class MyActivatedObserver(Observer):
 
         def __init__(self):
             Observer.__init__(self, MyModel())
-        self.register_callback('data*', callback)
+            self.register_callback('data*', callback)
 
     def callback(name, new, old):
         print 'notification of attribute "%s", new value: "%s"' % (name, new)
