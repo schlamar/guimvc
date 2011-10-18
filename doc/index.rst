@@ -1,20 +1,53 @@
-.. guimvc documentation master file, created by
-   sphinx-quickstart on Sat Oct  8 02:44:14 2011.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
 
-Welcome to guimvc's documentation!
-==================================
+.. _pip: http://www.pip-installer.org/
 
-Contents:
+=============================
+GuiMVC - Python MVC Framework
+=============================
+
+A lightweight MVC Framework in Python for easy and fast GUI development.
+
+
+
+Installation and Requirements
+=============================
+
+The prefered way to install ``guimvc`` is via pip_::
+
+    pip install guimvc
+
+
+Observer-Example
+================
+
+::
+
+    >>> from guimvc import Model, Observer
+    >>> m = Model()
+    >>> m.data = 1
+    >>> o = Observer(m)
+    >>> def callback(name, new, old):
+    ...     print 'attribute "%s" changed from "%s" to "%s"' % (name, old, new)
+    ...
+    >>> o.register_callback('*', callback)
+    >>> m.data = 2
+    attribute "data" changed from "1" to "2"
+
+
+Tutorial
+========
 
 .. toctree::
    :maxdepth: 2
 
-Indices and tables
-==================
+   tutorial
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+
+License
+=======
+
+Code and documentation are available according to the MIT License:
+
+.. include:: ../LICENSE
+  :literal:
 
