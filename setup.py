@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
       name = 'guimvc',
-      version = '0.1-dev',
+      version = '0.1a.dev',
       license='MIT',
 
       author='Marc Schlaich',
