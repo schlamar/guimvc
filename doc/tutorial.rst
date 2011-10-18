@@ -1,10 +1,9 @@
 
-========
 Tutorial
 ========
 
 Model
-=====
+-----
 
 Defining a model is really easy. Just define the observable
 attributes in the class attribute ``__observe__``, wildcards
@@ -51,7 +50,7 @@ of observable attributes means the same as defining::
 
 
 Observer
-========
+--------
 
 You have to initialize the Observer with the specific
 model::
@@ -75,6 +74,3 @@ Wildcards are allowed, too::
 
     def callback(name, new, old):
         print 'notification of attribute "%s", new value: "%s"' % (name, new)
-
-
-

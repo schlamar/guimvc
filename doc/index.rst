@@ -1,7 +1,6 @@
 
 .. _pip: http://www.pip-installer.org/
 
-=============================
 GuiMVC - Python MVC Framework
 =============================
 
@@ -10,7 +9,7 @@ A lightweight MVC Framework in Python for easy and fast GUI development.
 
 
 Installation and Requirements
-=============================
+-----------------------------
 
 The prefered way to install ``guimvc`` is via pip_::
 
@@ -18,7 +17,7 @@ The prefered way to install ``guimvc`` is via pip_::
 
 
 Observer-Example
-================
+----------------
 
 ::
 
@@ -35,7 +34,7 @@ Observer-Example
 
 
 Documentation
-=============
+-------------
 
 .. toctree::
    :maxdepth: 2
@@ -44,7 +43,7 @@ Documentation
 
 
 License
-=======
+-------
 
 Code and documentation are available according to the MIT License:
 
