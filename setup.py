@@ -10,6 +10,7 @@ setup(
       author='Marc Schlaich',
       author_email='marc.schlaich@gmail.com',
       url='http://ms4py.github.com/guimvc/',
+      download_url='http://github.com/ms4py/guimvc/tarball/master#egg=guimvc-dev',
 
       platforms = 'any',
       packages = ['guimvc'],
