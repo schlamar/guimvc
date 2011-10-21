@@ -21,10 +21,24 @@ class Observer(object):
 
         callback(attr_name, new_value, old_value, *args, **kwargs)
     '''
+
+    __callbacks__ = ()
+
     def __init__(self, model):
         self._callbacks = dict()
         self.model = model
         self.model.register_observer(self)
+
+        for data in self.__callbacks__:
+            if len(data) == 2:
+                pattern, callback = data
+                self.register_callback(pattern, callback)
+            elif len(data) == 3:
+                pattern, callback, args = data
+                self.register_callback(pattern, callback, args)
+            elif len(data) == 4:
+                pattern, callback, args, kwargs = data
+                self.register_callback(pattern, callback, args, kwargs)
 
 
     def notify(self, name, value, old_value):
