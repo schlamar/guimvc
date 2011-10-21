@@ -24,7 +24,7 @@ class Model(object):
     __observe__ = ('*',)
 
     def __init__(self):
-        self._observers = list()
+        self.__observers = list()
 
 
     def __setattr__(self, name, value):
@@ -38,10 +38,25 @@ class Model(object):
                 object.__setattr__(self, name, value)
             else:
                 object.__setattr__(self, name, value)
-                for obs in self._observers:
+                for obs in self.__observers:
                     obs.notify(name, value, old_value)
         else:
             object.__setattr__(self, name, value)
+
+
+    def __iter__(self):
+        '''Yield all observable attributes.'''
+
+        # Get class attributes
+        for attr in self.__class__.__dict__:
+            if not attr.startswith('__') and self._is_observable(attr):
+                yield attr
+
+        # Get instance attributes
+        for attr in self.__class__.__dict__:
+            if (not attr.startswith('__') and self._is_observable(attr)
+                    and attr not in self.__class__.__dict__):
+                yield attr
 
 
     def _is_observable(self, name):
@@ -55,4 +70,4 @@ class Model(object):
 
     def register_observer(self, obs):
         '''Register a new observer.'''
-        self._observers.append(obs)
+        self.__observers.append(obs)
