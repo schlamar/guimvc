@@ -47,7 +47,7 @@ Observer
 --------
 
 You have to initialize the Observer with the specific
-model::
+model as first attribute::
 
     from guimvc import Observer
 
@@ -57,14 +57,19 @@ model::
             Observer.__init__(self, model)
 
 
-Now you can register a callback on the change of an attribute.
+Now you can register callbacks on the change of an attribute.
 Wildcards are allowed, too::
+
+    def callback(name, new, old):
+        print 'attribute "%s" changed from "%s" to "%s"' % (name, old, new)
+
 
     class MyActivatedObserver(Observer):
 
-        def __init__(self):
-            Observer.__init__(self, MyModel())
-            self.register_callback('data*', callback)
+        __callbacks__ = [('data*', callback)]
 
-    def callback(name, new, old):
-        print 'notification of attribute "%s", new value: "%s"' % (name, new)
+    obs = MyActivatedObserver(RestrictiveModel())
+    obs.model.data1 = 2
+    #: attribute "data1" changed from "0" to "2"
+
+
