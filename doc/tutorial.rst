@@ -15,10 +15,8 @@ are allowed::
 
         __observe__ = ('data*',)
 
-        def __init__(self):
-            Model.__init__(self)
-            # This attribute will be observed
-            self.data1 = 0
+        # This attribute will be observed
+        data1 = 0
 
 
 You can make your wildcard patterns more restrictive
@@ -28,12 +26,11 @@ by defining the ``__exclude__`` attribute::
 
         __exclude__ = ('data0',)
 
-        def __init__(self):
-            MyModel.__init__(self)
-            # This attribute will be observed
-            self.data1 = 0
-            # This attribute will not be observed
-            self.data0 = 'default'
+        # This attribute will be observed
+        data1 = 0
+        # This attribute will not be observed
+        data0 = 'default'
+
 
 
 Per default all non-private attributes are observed. No configuration
@@ -43,9 +40,6 @@ of observable attributes means the same as defining::
 
         __observe__ = ('*',)
         __exclude__ = ('_*',)
-
-        def __init__(self):
-            Model.__init__(self)
 
 
 
