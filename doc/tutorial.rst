@@ -42,6 +42,13 @@ of observable attributes means the same as defining::
         __exclude__ = ('_*',)
 
 
+You can get all observed attributes of a model by iterating
+over it::
+
+    >>> list(RestrictiveModel())
+    ['data1']
+
+
 
 Observer
 --------
