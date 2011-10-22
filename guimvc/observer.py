@@ -54,17 +54,9 @@ class Observer(object):
             for func, args, kwargs in self.__callbacks[pattern]:
                 func(name, value, old_value, *args, **kwargs)
 
-
     def register_callback(self, pattern, func, *args, **kwargs):
         '''Register a callback function to the pattern.'''
         if pattern in self.__callbacks:
             self.__callbacks[pattern].append((func, args, kwargs))
         else:
             self.__callbacks[pattern] = [(func, args, kwargs)]
-
-
-    def register(self, name, *args, **kwargs):
-        def decorator(func):
-            self.register_callback((name, func, args, kwargs))
-            return func
-        return decorator
