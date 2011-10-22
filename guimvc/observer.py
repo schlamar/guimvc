@@ -25,7 +25,7 @@ class Observer(object):
     __callbacks__ = ()
 
     def __init__(self, model):
-        self._callbacks = dict()
+        self.__callbacks = dict()
         self.model = model
         self.model.register_observer(self)
 
@@ -35,22 +35,22 @@ class Observer(object):
                 self.register_callback(pattern, callback)
             elif len(data) == 3:
                 pattern, callback, args = data
-                self.register_callback(pattern, callback, args)
+                self.register_callback(pattern, callback, *args)
             elif len(data) == 4:
                 pattern, callback, args, kwargs = data
-                self.register_callback(pattern, callback, args, kwargs)
+                self.register_callback(pattern, callback, *args, **kwargs)
 
 
     def notify(self, name, value, old_value):
         '''Execute all matching callbacks.'''
-        for pattern in [p for p in self._callbacks if fnmatch(name, p)]:
-            for func, args, kwargs in self._callbacks[pattern]:
+        for pattern in [p for p in self.__callbacks if fnmatch(name, p)]:
+            for func, args, kwargs in self.__callbacks[pattern]:
                 func(name, value, old_value, *args, **kwargs)
 
 
     def register_callback(self, pattern, func, *args, **kwargs):
         '''Register a callback function to the pattern.'''
-        if pattern in self._callbacks:
-            self._callbacks[pattern].append((func, args, kwargs))
+        if pattern in self.__callbacks:
+            self.__callbacks[pattern].append((func, args, kwargs))
         else:
-            self._callbacks[pattern] = [(func, args, kwargs)]
+            self.__callbacks[pattern] = [(func, args, kwargs)]
