@@ -38,7 +38,8 @@ class Observer(object):
         self.model.register_observer(self)
 
         # check for observe methods in this class and
-        # all base classes between ``Observer`` as well
+        # all base classes between ``Observer`` and this
+        # class as well
         for cls in inspect.getmro(self.__class__):
             if cls is Observer:
                 break
