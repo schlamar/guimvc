@@ -12,7 +12,7 @@
 
 __version__ = '0.1-dev'
 
-__all__ = ['Observer', 'Model']
+__all__ = ['Observer', 'observemethod', 'Model']
 
-from observer import Observer
+from observer import Observer, observemethod
 from model import Model

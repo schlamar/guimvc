@@ -9,7 +9,17 @@
     :license: MIT, see LICENSE for more details.
 '''
 
+import inspect
 from fnmatch import fnmatch
+
+_OBS_ATTR = 'observe_method'
+
+
+def observemethod(pattern, *args, **kwargs):
+    def decorator(func):
+        setattr(func, _OBS_ATTR, (pattern, args, kwargs))
+        return func
+    return decorator
 
 
 class Observer(object):
@@ -22,24 +32,21 @@ class Observer(object):
         callback(attr_name, new_value, old_value, *args, **kwargs)
     '''
 
-    __callbacks__ = ()
-
     def __init__(self, model):
         self.__callbacks = dict()
         self.model = model
         self.model.register_observer(self)
 
-        for data in self.__callbacks__:
-            if len(data) == 2:
-                pattern, callback = data
-                self.register_callback(pattern, callback)
-            elif len(data) == 3:
-                pattern, callback, args = data
-                self.register_callback(pattern, callback, *args)
-            elif len(data) == 4:
-                pattern, callback, args, kwargs = data
-                self.register_callback(pattern, callback, *args, **kwargs)
-
+        # check for observe methods in this class and
+        # all base classes between ``Observer`` as well
+        for cls in inspect.getmro(self.__class__):
+            if cls is Observer:
+                break
+            for attr in cls.__dict__:
+                func = getattr(self, attr)
+                if callable(func) and hasattr(func, _OBS_ATTR):
+                    pattern, args, kwargs = getattr(func, _OBS_ATTR)
+                    self.register_callback(pattern, func, *args, **kwargs)
 
     def notify(self, name, value, old_value):
         '''Execute all matching callbacks.'''
@@ -54,3 +61,10 @@ class Observer(object):
             self.__callbacks[pattern].append((func, args, kwargs))
         else:
             self.__callbacks[pattern] = [(func, args, kwargs)]
+
+
+    def register(self, name, *args, **kwargs):
+        def decorator(func):
+            self.register_callback((name, func, args, kwargs))
+            return func
+        return decorator
