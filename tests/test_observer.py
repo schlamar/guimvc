@@ -11,19 +11,20 @@ import unittest
 
 from mock import Mock
 
-from guimvc import Observer
+from guimvc import Observer, observemethod
 
 
-def _get_mock(obs, attr):
-    return obs._Observer__callbacks[attr][0][0]
+class BaseObserver(Observer):
+    pass
 
 
-class TestObserver(Observer):
+class TestObserver(BaseObserver):
+    pass
 
-    __callbacks__ = [('attr1', Mock()),
-                     ('attr2', Mock(), ('arg1', 'arg2')),
-                     ('attr3', Mock(), ('arg1',), dict(kwarg1=1))
-                    ]
+# This tests the inspection of the base classes
+BaseObserver.attr1 = observemethod('attr1')(Mock())
+TestObserver.attr2 = observemethod('attr2', 'arg1', 'arg2')(Mock())
+TestObserver.attr3 = observemethod('attr3', 'arg1', kwarg1=1)(Mock())
 
 
 class ObserverTest(unittest.TestCase):
@@ -31,23 +32,20 @@ class ObserverTest(unittest.TestCase):
     def test_callbacks(self):
         obs = TestObserver(Mock())
 
-        mock = _get_mock(obs, 'attr1')
         args = ('attr1', 0, 1)
         obs.notify(*args)
-        mock.assert_called_with(*args)
+        obs.attr1.assert_called_with(*args)
 
-        mock = _get_mock(obs, 'attr2')
         args = ['attr2', 0, 1]
         obs.notify(*args)
         args = args + ['arg1', 'arg2']
-        mock.assert_called_with(*args)
+        obs.attr2.assert_called_with(*args)
 
-        mock = _get_mock(obs, 'attr3')
         args = ['attr3', 0, 1]
         obs.notify(*args)
         args = args + ['arg1']
         kwargs = dict(kwarg1=1)
-        mock.assert_called_with(*args, **kwargs)
+        obs.attr3.assert_called_with(*args, **kwargs)
 
         mock = Mock()
         obs.register_callback('attr4', mock, 'arg1', kwarg1=1)
@@ -57,7 +55,7 @@ class ObserverTest(unittest.TestCase):
         mock.assert_called_with(*args, **kwargs)
 
     def test_wildcards(self):
-        obs = TestObserver(Mock())
+        obs = Observer(Mock())
         mock = Mock()
         obs.register_callback('*', mock)
 
