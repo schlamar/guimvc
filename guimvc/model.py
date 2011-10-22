@@ -53,7 +53,7 @@ class Model(object):
                 yield attr
 
         # Get instance attributes
-        for attr in self.__class__.__dict__:
+        for attr in self.__dict__:
             if (not attr.startswith('__') and self._is_observable(attr)
                     and attr not in self.__class__.__dict__):
                 yield attr
