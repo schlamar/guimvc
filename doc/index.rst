@@ -21,16 +21,22 @@ Observer-Example
 
 ::
 
-    >>> from guimvc import Model, Observer
-    >>> m = Model()
-    >>> m.data = 1
-    >>> o = Observer(m)
-    >>> def callback(name, new, old):
-    ...     print 'attribute "%s" changed from "%s" to "%s"' % (name, old, new)
-    ...
-    >>> o.register_callback('*', callback)
-    >>> m.data = 2
-    attribute "data" changed from "1" to "2"
+    from guimvc import Model, Observer, observemethod
+
+    class MyModel(Model):
+        data = 0
+
+    class MyObserver(Observer):
+
+        @observemethod('data')
+        def callback(self, name, new, old):
+            print 'Attribute "%s" changed from "%s" to "%s"' % (name, old, new)
+
+    model = MyModel()
+    obs = MyObserver(model)
+    model.data = 1
+    #: Attribute "data" changed from "0" to "1"
+
 
 
 Documentation
