@@ -32,10 +32,11 @@ class Observer(object):
         callback(attr_name, new_value, old_value, *args, **kwargs)
     '''
 
-    def __init__(self, model):
+    def __init__(self, model=None):
         self.__callbacks = dict()
         self.model = model
-        self.model.register_observer(self)
+        if self.model:
+            self.model.register_observer(self)
 
         # check for observe methods in this class and
         # all base classes between ``Observer`` and this
