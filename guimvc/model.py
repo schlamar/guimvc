@@ -123,3 +123,23 @@ class List(Container, list):
     def __setitem__(self, index, value):
         object.__getattribute__(self, '_func')()
         list.__setitem__(self, index, value)
+
+
+class Dict(Container, dict):
+    '''List implementation usable as an attribute of a
+    :class:``Model`` instance.
+
+    '''
+    _modify_methods = ('clear', 'pop', 'popitem', 'update')
+
+    def __init__(self, obj):
+        Container.__init__(self)
+        dict.__init__(self, obj)
+
+    def __delitem__(self, key):
+        object.__getattribute__(self, '_func')()
+        dict.__delitem__(self, key)
+
+    def __setitem__(self, key, value):
+        object.__getattribute__(self, '_func')()
+        dict.__setitem__(self, key, value)

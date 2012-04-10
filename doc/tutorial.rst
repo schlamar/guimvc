@@ -49,6 +49,17 @@ over it::
     ['data1']
 
 
+The Model usually detect modifications if you reassign a
+value. If you want to track changes of container datatypes
+such as ``list`` or ``dict`` you have to use the custom
+implementations::
+
+    from guimvc import List
+
+    class ContainerModel(Model):
+
+        data1 = List([1, 2, 3])
+
 
 Observer
 --------

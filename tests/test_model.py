@@ -12,7 +12,7 @@ import unittest
 
 from mock import Mock
 
-from guimvc import Model, Observer, List
+from guimvc import Model, Observer, List, Dict
 
 
 class TestModel(Model):
@@ -88,7 +88,6 @@ class ContainerTest(unittest.TestCase):
         assert obs.notify.called
 
         obs.notify.reset_mock()
-        print model.data
         assert model.data[0] == 2  # no modification
         assert not obs.notify.called
 
@@ -100,4 +99,28 @@ class ContainerTest(unittest.TestCase):
         obs.notify.reset_mock()
         model.data.pop()  # remove last item
         assert model.data[-1] == 3
+        assert obs.notify.called
+
+    def test_dict(self):
+        class DictModel(Model):
+            data = Dict({1: 'blub', 'test': True})
+
+        model = DictModel()
+        obs = Observer(model)
+        obs.notify = Mock()
+
+        model.data[0] = 'new'
+        assert model.data[0] == 'new'
+        assert obs.notify.called
+
+        obs.notify.reset_mock()
+        del model.data[0]
+        assert obs.notify.called
+
+        obs.notify.reset_mock()
+        assert 0 not in model.data  # no modification
+        assert not obs.notify.called
+
+        obs.notify.reset_mock()
+        model.data.popitem()
         assert obs.notify.called
