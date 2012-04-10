@@ -26,7 +26,6 @@ class Model(object):
     def __init__(self):
         self.__observers = list()
 
-
     def __setattr__(self, name, value):
         '''The "magic" to notify all observers if
         an attribute is observable.
@@ -43,7 +42,6 @@ class Model(object):
         else:
             object.__setattr__(self, name, value)
 
-
     def __iter__(self):
         '''Yield all observable attributes.'''
 
@@ -58,7 +56,6 @@ class Model(object):
                     and attr not in self.__class__.__dict__):
                 yield attr
 
-
     def _is_observable(self, name):
         '''Matches the patterns in `__exclude__` and
         `__observe__`.
@@ -66,7 +63,6 @@ class Model(object):
         if any(fnmatch(name, p) for p in self.__exclude__):
             return False
         return any(fnmatch(name, p) for p in self.__observe__)
-
 
     def register_observer(self, obs):
         '''Register a new observer.'''
