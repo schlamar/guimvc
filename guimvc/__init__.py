@@ -10,7 +10,7 @@
     :license: MIT, see LICENSE for more details.
 '''
 
-__version__ = '0.1-dev'
+__version__ = '0.1dev'
 
 __all__ = ['Observer', 'observemethod', 'Model']
 

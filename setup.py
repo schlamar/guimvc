@@ -2,9 +2,11 @@
 
 from setuptools import setup
 
+import guimvc
+
 setup(
       name='guimvc',
-      version='0.1a.dev',
+      version=guimvc.__version__,
       license='MIT',
 
       author='Marc Schlaich',
