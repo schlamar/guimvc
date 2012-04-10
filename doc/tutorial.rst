@@ -54,11 +54,12 @@ value. If you want to track changes of container datatypes
 such as ``list`` or ``dict`` you have to use the custom
 implementations::
 
-    from guimvc import List
+    from guimvc import List, Dict
 
     class ContainerModel(Model):
 
         data1 = List([1, 2, 3])
+        data2 = Dict({1: 'value', 'test': True})
 
 
 Observer
