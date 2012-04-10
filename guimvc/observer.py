@@ -5,7 +5,7 @@
 
     The Observer-Part of the MVC Pattern.
 
-    :copyright: (c) 2011 by Marc Schlaich
+    :copyright: (c) 2012 by Marc Schlaich
     :license: MIT, see LICENSE for more details.
 '''
 

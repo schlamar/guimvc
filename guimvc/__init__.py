@@ -6,13 +6,13 @@
     A lightweight MVC Framework in Python for easy
     and fast GUI development.
 
-    :copyright: (c) 2011 by Marc Schlaich
+    :copyright: (c) 2012 by Marc Schlaich
     :license: MIT, see LICENSE for more details.
 '''
 
 __version__ = '0.1dev'
 
-__all__ = ['Observer', 'observemethod', 'Model']
+__all__ = ['Observer', 'observemethod', 'Model', 'List']
 
 from observer import Observer, observemethod
-from model import Model
+from model import Model, List

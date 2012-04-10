@@ -12,7 +12,7 @@ import unittest
 
 from mock import Mock
 
-from guimvc import Model, Observer
+from guimvc import Model, Observer, List
 
 
 class TestModel(Model):
@@ -35,7 +35,6 @@ class ModelTest(unittest.TestCase):
         self.assertEqual(set(model), set(['attr1', 'attr2']))
 
         model.attr3 = 0
-        print model.__dict__
         self.assertEqual(set(model), set(['attr1', 'attr2', 'attr3']))
 
         del model.attr3
@@ -69,3 +68,36 @@ class ModelTest(unittest.TestCase):
 
         model.data1 = 1
         obs.notify.assert_called_with('data1', 1, 0)
+
+
+class ContainerTest(unittest.TestCase):
+
+    def test_list(self):
+        class ListModel(Model):
+            data = List([1, 2, 3])
+
+        model = ListModel()
+        obs = Observer(model)
+        obs.notify = Mock()
+
+        model.data.append(4)
+        assert obs.notify.called
+
+        obs.notify.reset_mock()
+        del model.data[0]
+        assert obs.notify.called
+
+        obs.notify.reset_mock()
+        print model.data
+        assert model.data[0] == 2  # no modification
+        assert not obs.notify.called
+
+        obs.notify.reset_mock()
+        model.data[0] = 1
+        assert model.data[0] == 1
+        assert obs.notify.called
+
+        obs.notify.reset_mock()
+        model.data.pop()  # remove last item
+        assert model.data[-1] == 3
+        assert obs.notify.called
