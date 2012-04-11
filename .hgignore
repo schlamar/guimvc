@@ -1,5 +1,0 @@
-syntax: glob
-.DS_Store
-*.egg-info/
-*.pyc
-doc/_build/
