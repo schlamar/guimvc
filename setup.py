@@ -12,7 +12,7 @@ setup(
       author='Marc Schlaich',
       author_email='marc.schlaich@gmail.com',
       url='http://guimvc.readthedocs.org/',
-      download_url=('http://github.com/ms4py/guimvc/tarball/master'
+      download_url=('http://github.com/schlamar/guimvc/tarball/master'
                     '#egg=guimvc-dev'),
 
       platforms='any',
